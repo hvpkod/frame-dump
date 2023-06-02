@@ -37,10 +37,11 @@ def download_youtube_video(url, output_path):
 
 def extract_frames(video_path, start_time, end_time, output_path, frame_interval):
     """
-    Extracts frames from a video between the specified start and end times.
+    Extract frames from a video between the specified start and end times.
 
     Args:
-        video_path (str): The path to the video file.
+        video_path (str): The pat:w
+        h to the video file.
         start_time (str): The start time in the format "mm:ss" for frame extraction.
         end_time (str): The end time in the format "mm:ss" for frame extraction.
         output_path (str): The path to save the extracted frames.
@@ -76,7 +77,7 @@ def extract_frames(video_path, start_time, end_time, output_path, frame_interval
 
 def convert_time_to_frame(time, frame_rate):
     """
-    Converts time in the format "mm:ss" or "mm:ss.ss" to the corresponding frame number.
+    Convert time in the format "mm:ss" or "mm:ss.ss" to the corresponding frame number.
 
     Args:
         time (str): Time in the format "mm:ss" or "mm:ss.ss".
@@ -100,12 +101,33 @@ def convert_time_to_frame(time, frame_rate):
 
 
 def create_output_folder(video_title):
+    """
+    Create a valid output folder name based on the video title.
+
+    Args:
+        video_title (str): The title of the video.
+
+    Returns:
+        str: The output folder name.
+
+    """
     valid_chars = "-_.() %s%s" % (string.ascii_letters, string.digits)
     folder_name = "".join(c for c in video_title if c in valid_chars)
     return folder_name
 
 
 def save_meta_file(output_path, url, start_time, end_time, frame_interval):
+    """
+    Save a meta file containing the video URL, start time, end time, and frame interval.
+
+    Args:
+        output_path (str): The path to save the meta file.
+        url (str): The YouTube video URL.
+        start_time (str): The start time in the format "mm:ss" or "mm:ss.ss".
+        end_time (str): The end time in the format "mm:ss" or "mm:ss.ss".
+        frame_interval (int): The interval between extracted frames.
+
+    """
     meta = {
         "URL": url,
         "Start Time": start_time,
@@ -119,6 +141,16 @@ def save_meta_file(output_path, url, start_time, end_time, frame_interval):
 
 
 def generate_gif(frames_folder, output_path, gif_duration):
+    """
+    Creates a GIF from the extracted frames.
+
+    Args:
+        frames_folder (str): The path to the folder containing the frames.
+        output_path (str): The path to save the GIF file.
+        gif_duration (int): Duration (in milliseconds) per frame in the GIF.
+        loop (bool): Whether to loop the GIF (default: True).
+
+    """
     frames = []
     for frame_file in sorted(os.listdir(frames_folder)):
         if frame_file.endswith(".jpg"):
@@ -133,6 +165,7 @@ def generate_gif(frames_folder, output_path, gif_duration):
 
 
 def main():
+    """Main function of the program."""
     parser = argparse.ArgumentParser(description="YouTube Video Frame Extractor")
     parser.add_argument("url", type=str, help="YouTube video URL")
     parser.add_argument("start_time", type=str, help="Start time in mm:ss format")
